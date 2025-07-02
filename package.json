@@ -1,27 +1,42 @@
 {
   "name": "fluxcore",
   "version": "1.0.0",
-  "description": "RESTful API with Express, MongoDB, JWT Auth, Validation, Docker & automated port cleanup",
+  "description": "RESTful API with Express, MongoDB, JWT auth, validation, Docker & automated port cleanup",
   "main": "server.js",
+  "config": {
+    "port": 5000
+  },
   "scripts": {
-    "predev": "npx kill-port 5000",
-    "start": "node server.js",
-    "dev": "npm run predev && nodemon server.js"
+    "predev": "npx kill-port $npm_package_config_port",
+  "dev:node": "npm run predev && nodemon server.js",
+  "dev:python": "cd python_api && uvicorn app.main:app --reload --port 8000",
+  "dev": "concurrently \"npm run dev:node\" \"npm run dev:python\"",
+  "start": "node server.js",
+    "gen:client:py": "openapi-generator-cli generate -i http://localhost:$npm_package_config_port/openapi.json -g python -o ./clients/python-client",
+    "gen:client:ts": "openapi-generator-cli generate -i http://localhost:$npm_package_config_port/openapi.json -g typescript-axios -o ./clients/ts-axios-client --additional-properties=supportsES6=true"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
     "express-validator": "^6.14.3",
     "express-winston": "^4.2.0",
+    "helmet": "^7.0.0",
+    "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.3",
     "prom-client": "^15.1.3",
+    "rate-limit-redis": "^2.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "kill-port": "^1.6.1",
-    "nodemon": "^2.0.0"
+    "nodemon": "^2.0.22",
+    "@openapitools/openapi-generator-cli": "^2.5.0"
   }
 }
