@@ -86,6 +86,7 @@ app.use((req, res, next) => {
 });
 
 // --- Start Server ---
+// --- Start Server ---
 const PORT = process.env.PORT || 5000;
 connectDB()
   .then(() => {
@@ -97,3 +98,5 @@ connectDB()
     logger.error('DB connection failed', err);
     process.exit(1);
   });
+
+module.exports = app;  // <-- 新增這行，提供給 Jest & Supertest 使用
