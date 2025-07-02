@@ -7,15 +7,14 @@
     "port": 5000
   },
   "scripts": {
-    "dev": "ts-node src/server.ts",
-  "build": "tsc",
-  "start": "node dist/server.js",
-  "seed": "node scripts/seed.js",
+    "check:types": "tsc --noEmit",
+    "dev": "concurrently \"npm run dev:node\" \"npm run dev:python\"",
+    "build": "tsc",
+    "start": "node server.js",
+    "seed": "node scripts/seed.js",
     "predev": "npx kill-port $npm_package_config_port",
     "dev:node": "npm run predev && nodemon server.js",
     "dev:python": "cd python_api && uvicorn app.main:app --reload --port 8000",
-    "dev": "concurrently \"npm run dev:node\" \"npm run dev:python\"",
-    "start": "node server.js",
     "test": "jest",
     "jest": {
       "testEnvironment": "node"
@@ -46,11 +45,14 @@
     "@openapitools/openapi-generator-cli": "^2.5.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.10",
+    "@types/supertest": "^6.0.3",
     "jest": "^30.0.3",
     "kill-port": "^1.6.1",
     "nodemon": "^2.0.22",
     "supertest": "^7.1.1",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
