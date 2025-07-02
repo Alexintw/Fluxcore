@@ -39,12 +39,18 @@ npm install
 
 ### Environment Configuration
 
-Create a `.env` file at the project root:
+A sample `.env.example` file has been added to the project root. Copy it to `.env` and fill in your own credentials:
+
+```bash
+cp .env.example .env
+```
+
+Contents of `.env.example`:
 
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+MONGO_URI=<YOUR_MONGODB_CONNECTION_STRING>
+JWT_SECRET=<YOUR_SECRET_KEY>
 ```
 
 ### Running the Application
@@ -96,8 +102,11 @@ Fluxcore/
 ├── Dockerfile        # Docker configuration
 ├── package.json      # Project dependencies and scripts
 ├── server.js         # Application entry point
-└── .env              # Environment variables
+├── .env.example      # Sample environment variables
+└── .env              # Your environment variables (not committed)
 ```
+
+## Simple API Flow
 
 ```mermaid
 flowchart TD
@@ -109,6 +118,12 @@ flowchart TD
     Controller -->|Generate JWT| Auth[Auth Module]
     MongoDB --> Controller
     Controller -->|Response| Client
+```
+
+## Changelog
+
+* **2025-07-02:** Added `.env.example` and environment setup instructions.
+* **2025-07-02:** Fixed Mermaid diagram code fencing to render properly in GitHub.
 
 ## License
 
